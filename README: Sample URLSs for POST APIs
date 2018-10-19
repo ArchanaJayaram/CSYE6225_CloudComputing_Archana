@@ -1,0 +1,121 @@
+Below is a list of POST requests for Professor, Students, Courses, Program and Lectures services.
+
+PROFESSOR:
+
+1) Post: http://localhost:8080/courseservice3/webapi/professors
+Body:
+{
+        "firstName": "Avinav",
+        "department": "InfoSystems",
+        "professorId": 1,
+        "joiningDate": "2018/01/01"
+    }
+
+-------------------------------------------------------------------------------------------------------------------
+STUDENTS:
+
+1) Post: http://localhost:8080/courseservice3/webapi/students
+Body:
+{
+        "firstName": "Archana",
+        "programName": "InfoSystems",
+        "coursesEnrolled": ["INFO6100","CSYE1234","INFO1200"],
+        "image": "abc"
+}
+
+
+-------------------------------------------------------------------------------------------------------------------------
+COURSES:
+
+1) Post: http://localhost:8080/courseservice3/webapi/courses
+Body:
+{
+        "courseName": "Cloud Computing",
+        "courseId": "CSYE2345",
+	"progName": "InfoSystems",
+        "TA": [
+	        {
+	        "firstName": "Alice",
+	        "studentID": 1,
+	        "programName": "InfoSystems",
+	        "coursesEnrolled": ["INFO6100","CSYE1234","INFO1200"],
+	        "image": "abc"
+			}
+        	],
+        "enrolledStudents": [
+            {
+                "firstName": "Archana",
+                "studentID": 1,
+                "coursesEnrolled": ["INFO6100","CSYE1234","INFO1200"]
+            },
+            {
+                "firstName": "Aarabhi",
+                "studentID": 2,
+                "coursesEnrolled": ["INFO6100","CSYE1234","INFO1200"]
+            },
+            {
+                "firstName": "Diksha",
+                "studentID": 3,
+                "coursesEnrolled": ["INFO6100","CSYE1234","INFO1200"]
+            }
+        ],
+        "prof":[
+		    {
+		        "firstName": "Avinav",
+		        "department": "InfoSystems",
+		        "professorId": 1,
+		        "joiningDate": "2018/01/01"
+			 }
+        	],
+        "Roster": [],
+        "Lectures":[],
+        "board":[]
+}
+
+
+--------------------------------------------------------------------------------------------------------------
+PROGRAM:
+
+1) Post: http://localhost:8080/courseservice3/webapi/programs 
+Body:
+{
+	    "programName":"MSIS",
+	    "director":"Kal",
+	     "courses": [
+            {
+                "courseId": "PM6100",
+                "enrolledStudents": [],
+                "roster": []
+            },
+            {
+                "courseId": "PM2100",
+                "enrolledStudents": [],
+                "roster": []
+            },
+            {
+                "courseId": "PM3210",
+                "enrolledStudents": [],
+                "roster": []
+            }
+        ],
+        "enrolledStudents":[
+           {
+	        "firstName": "Alice",
+	        "studentID": 1,
+	        "coursesEnrolled": ["INFO6100","CSYE1234","INFO1200"]
+	  }	
+        
+        ]
+}
+
+--------------------------------------------------------------------------
+LECTURE:
+
+1) Post: http://localhost:8080/courseservice3/webapi/lectures
+Body:
+{
+	    "courseId":"INF06100",
+	    "notes": ["Encapsulation","Abstraction","Polymorphism"],
+	    "courseMaterial": ["Encapsulation.doc","Abstraction.doc","Polymorphism.doc"]
+	   
+}
