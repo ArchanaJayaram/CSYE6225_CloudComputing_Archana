@@ -1,33 +1,41 @@
-Below is a list of POST requests for Professor, Students, Courses, Program and Lectures services.
+Below is a list of POST requests for Students, Courses, Program and Lectures services.
 
-PROFESSOR:
 
-1) Post: http://localhost:8080/courseservice3/webapi/professors
-Body:
-{
-        "firstName": "Avinav",
-        "department": "InfoSystems",
-        "professorId": 1,
-        "joiningDate": "2018/01/01"
-    }
-
--------------------------------------------------------------------------------------------------------------------
 STUDENTS:
 
-1) Post: http://localhost:8080/courseservice3/webapi/students
+1) Post: http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/students
 Body:
-{
-        "firstName": "Archana",
+   {
+        "firstName": "Archana Jayaram",
         "programName": "InfoSystems",
         "coursesEnrolled": ["INFO6100","CSYE1234","INFO1200"],
         "image": "abc"
 }
 
+2) Get: http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/students/{studentId}
 
--------------------------------------------------------------------------------------------------------------------------
+3) Put: http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/students/{studentId}
+Body: (Changed the student name)
+   {
+        "firstName": "Jing Fu",
+        "programName": "InfoSystems",
+        "coursesEnrolled": ["INFO6100","CSYE1234","INFO1200"],
+        "image": "abc"
+}
+
+4) Delete: http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/students/{studentId}
+Body: 
+   {
+        "firstName": "Jing Fu",
+        "programName": "InfoSystems",
+        "coursesEnrolled": ["INFO6100","CSYE1234","INFO1200"],
+        "image": "abc"
+}
+
+-------------------------------------------------------------------------------------------------------------------
 COURSES:
 
-1) Post: http://localhost:8080/courseservice3/webapi/courses
+1) Post: http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/courses
 Body:
 {
         "courseName": "Cloud Computing",
@@ -35,7 +43,7 @@ Body:
 	"progName": "InfoSystems",
         "TA": [
 	        {
-	        "firstName": "Alice",
+	        "firstName": "Shaoyang",
 	        "studentID": 1,
 	        "programName": "InfoSystems",
 	        "coursesEnrolled": ["INFO6100","CSYE1234","INFO1200"],
@@ -73,10 +81,61 @@ Body:
 }
 
 
+2) Get: http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/courses/{courseId}
+
+4) Put: http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/courses/{courseId}
+(Changed the name of TA)
+Body:
+{
+        "courseName": "Cloud Computing",
+        "courseId": "CSYE2345",
+	"progName": "InfoSystems",
+        "TA": [
+	        {
+	        "firstName": "Jing",
+	        "studentID": 1,
+	        "programName": "InfoSystems",
+	        "coursesEnrolled": ["INFO6100","CSYE1234","INFO1200"],
+	        "image": "abc"
+			}
+        	],
+        "enrolledStudents": [
+            {
+                "firstName": "Archana",
+                "studentID": 1,
+                "coursesEnrolled": ["INFO6100","CSYE1234","INFO1200"]
+            },
+            {
+                "firstName": "Aarabhi",
+                "studentID": 2,
+                "coursesEnrolled": ["INFO6100","CSYE1234","INFO1200"]
+            },
+            {
+                "firstName": "Diksha",
+                "studentID": 3,
+                "coursesEnrolled": ["INFO6100","CSYE1234","INFO1200"]
+            }
+        ],
+        "prof":[
+		    {
+		        "firstName": "Avinav",
+		        "department": "InfoSystems",
+		        "professorId": 1,
+		        "joiningDate": "2018/01/01"
+			 }
+        	],
+        "Roster": [],
+        "Lectures":[],
+        "board":[]
+}
+
+4) Delete: http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/courses/{courseId}
+
+
 --------------------------------------------------------------------------------------------------------------
 PROGRAM:
 
-1) Post: http://localhost:8080/courseservice3/webapi/programs 
+1) Post: http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/programs 
 Body:
 {
 	    "programName":"MSIS",
@@ -108,14 +167,62 @@ Body:
         ]
 }
 
+2) GET: http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/programs/{programName}
+
+3) PUT: http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/programs/{programName}
+Body: (Changed name of director)
+{
+	    "programName":"Program Management",
+	    "director":"KalBugrara",
+	     "courses": [
+            {
+                "courseId": "PM6100",
+                "enrolledStudents": [],
+                "roster": []
+            },
+            {
+                "courseId": "PM2100",
+                "enrolledStudents": [],
+                "roster": []
+            },
+            {
+                "courseId": "PM3210",
+                "enrolledStudents": [],
+                "roster": []
+            }
+           ],
+	   "enrolledStudents":[
+             {
+	        "firstName": "Alice",
+	        "studentID": 1,
+	        "coursesEnrolled": ["INFO6100","CSYE1234","INFO1200"]
+	    }	
+          ]
+}
+
+4) DELETE: http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/programs/{programName}
+
 --------------------------------------------------------------------------
 LECTURE:
 
-1) Post: http://localhost:8080/courseservice3/webapi/lectures
+1) Post: http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/lectures/
 Body:
 {
-	    "courseId":"INF06100",
+	    "courseId":"INFO6100",
 	    "notes": ["Encapsulation","Abstraction","Polymorphism"],
 	    "courseMaterial": ["Encapsulation.doc","Abstraction.doc","Polymorphism.doc"]
 	   
 }
+
+2) GET: http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/lectures/{courseId}
+
+3) PUT: http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/lectures/{courseId}
+Body:
+{
+	    "courseId":"INFO6100",
+	    "notes": ["Encapsulation","Abstraction","Polymorphism","Inheritance"],
+	    "courseMaterial": ["Encapsulation.doc","Abstraction.doc","Polymorphism.doc","Inheritance.doc"]
+	   
+}
+
+4) DELETE: http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/lectures/{courseId}
