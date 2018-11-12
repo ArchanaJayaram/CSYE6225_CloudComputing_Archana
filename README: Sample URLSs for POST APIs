@@ -1,0 +1,155 @@
+PROFESSORS:
+
+1) POST - http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/professors
+Body:
+{		
+	"professorId": "andrie.guschin",
+        "firstName": "Andrie",
+        "lastName":"Guschin",
+        "department": "InformationSystems",
+        "joiningDate": "2016/01/01"
+}
+
+2) GET
+http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/professors/
+http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/professors/{professorId}
+
+3) PUT - http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/professors/{professorId}
+Body: (Changed the department)
+{		
+	"professorId": "andrie.guschin",
+        "firstName": "Andrie",
+        "lastName":"Guschin",
+        "department": "CSYE",
+        "joiningDate": "2016/01/01"
+}
+
+4) Delete: http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/professors/{professorId}
+
+-------------------------------------------------------------------------------------------------------------
+STUDENTS
+
+1) POST - http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/students
+Body:
+{		
+	"studentId": "lakshmi.srinivas",
+        "firstName": "Lakshmi",
+        "lastName": "Srinivas",
+        "department": "InformationSystems",
+        "registeredCourses": ["INFO6225","INFO1200","CSYE1250"],
+        "joiningDate": "09/05/2017"
+}
+
+2) GET
+http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/students/
+http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/students/{studentId}
+
+3) PUT - http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/students/{studentId}
+Body: (Changed the joining year)
+ {		
+	"studentId": "lakshmi.srinivas",
+        "firstName": "Lakshmi",
+        "lastName": "Srinivas",
+        "department": "InformationSystems",
+        "registeredCourses": ["INFO6225","INFO1200","CSYE1250"],
+        "joiningDate": "09/05/2018"
+}
+
+4) Delete: http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/students/{studentId}
+
+-------------------------------------------------------------------------------------------------------------------
+COURSES:
+
+1) POST - http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/courses
+Body:
+{
+        "courseId": "INFO6225",
+        "taId": "jing.fu",
+        "professorId": "avinav.jami",
+	"department": "InformationSytems",
+        "roster": ["archana.jayaram","aarabhi.puga","bharti.ladhani"],
+        "boardId": "info6225Board"
+
+}
+
+2) GET
+ http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/courses
+ http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/courses/{courseId}
+
+4) PUT - http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/courses/{courseId}
+(Added more students to the roster)
+Body:
+{
+        "courseId": "INFO6225",
+        "taId": "jing.fu",
+        "professorId": "avinav.jami",
+	"department": "InformationSytems",
+        "roster": ["archana.jayaram","aarabhi.puga","bharti.ladhani","diksha.narahari",""],
+        "boardId": "info6225Board"
+
+}
+
+4) DELETE - http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/courses/{courseId}
+
+
+--------------------------------------------------------------------------------------------------------------------------------------
+BOARD
+
+1) POST - http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/board
+Body:
+    {
+        
+	     "boardId": "info6225Board",
+
+	     "courseId": "INFO6225"
+   
+    }
+
+2) GET
+ http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/board
+ http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/board/{boardId}
+
+4) PUT - http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/board/{boardId}
+Body:
+    {
+        
+	     "boardId": "info6100Board",
+
+	     "courseId": "INFO6100"
+   
+    }
+
+4) DELETE - http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/board/{boardId}
+
+-----------------------------------------------------------------------------------------------------------------------------
+ANNOUNCEMENTS
+
+1) POST -  http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/announcements
+Body:
+ {
+        
+	  "announcementId": "A3",
+
+          "announcementText": "Course Material and Assignment have been uploaded",
+
+          "boardId": "info6225"
+
+  }
+
+2) GET
+ http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/announcements
+ http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/announcements/{boardId_announcementId}
+
+4) PUT -  http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/announcements/{boardId_announcementId}
+Body:
+ {
+   
+          "announcementId": "A3",
+
+          "announcementText": "Quiz key has been uploaded",
+
+          "boardId": "info6225"
+
+  }
+
+4) DELETE -  http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/announcements/{boardId_announcementId}
