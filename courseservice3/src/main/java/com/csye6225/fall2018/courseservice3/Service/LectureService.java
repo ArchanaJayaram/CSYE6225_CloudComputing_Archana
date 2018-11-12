@@ -40,11 +40,12 @@ public class LectureService {
 		}
 		
 		// Updating Lecture Info
-		public Lecture updateLectureInfo(String courseId, List<String> updatedNotes) {
-			Lecture lecture = lecturesMap.get(courseId);
-			lecture.setNotes(updatedNotes);
-			lecturesMap.put(courseId, lecture);
-			return lecture;
+		public Lecture updateLectureInfo(String courseId, Lecture lecture) {
+			Lecture oldLecture = lecturesMap.get(courseId);
+			List<String> newNotes = lecture.getNotes();
+			List<String> newMaterial = lecture.getCourseMaterial();
+			oldLecture.setNotes(newNotes);
+			oldLecture.setCourseMaterial(newMaterial);
+			return oldLecture;
 		}
-		//	
 }

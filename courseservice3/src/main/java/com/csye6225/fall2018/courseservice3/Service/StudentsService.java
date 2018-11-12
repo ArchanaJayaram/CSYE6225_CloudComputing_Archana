@@ -1,73 +1,113 @@
 package com.csye6225.fall2018.courseservice3.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import com.csye6225.fall2018.courseservice3.Datamodel.InMemoryDatabase;
-import com.csye6225.fall2018.courseservice3.Datamodel.Students;
-import com.csye6225.fall2018.courseservice3.Resources.CoursesResource;
-import com.csye6225.fall2018.courseservice3.Datamodel.Courses;
-import com.csye6225.fall2018.courseservice3.Service.CoursesService;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.csye6225.fall2018.courseservice3.Datamodel.DynamoDbConnector;
+import com.csye6225.fall2018.courseservice3.Datamodel.Student;
 
 public class StudentsService {
 	
-	static HashMap<Long, Students> studentsMap = InMemoryDatabase.getStudentsDB();
-	//static CoursesService courseService = new CoursesService();
+	static DynamoDbConnector dynamoDB;
+	DynamoDBMapper mapper;
+	Student studentObject = new Student();
+	
+	public StudentsService() {		
+		dynamoDB = new DynamoDbConnector();
+		dynamoDB.init();
+		mapper = new DynamoDBMapper(dynamoDB.getClient());		
+	}
+		
+	//Adding a student with input as a Students object
+	public Student addStudent(Student student) {	
+		mapper.save(student);
+		return student;
+	}
 	
 	// Getting a list of all students
-	public List<Students> getAllStudents() {	
-		ArrayList<Students> studentList = new ArrayList<>();
-		for (Students student : studentsMap.values()) {
-			studentList.add(student);
-		}
-		return studentList ;
+	public List<Student> getAllStudents() {	
+		DynamoDBScanExpression expression = new DynamoDBScanExpression();
+		expression.setIndexName("studentId-index");
+		expression.withConsistentRead(false);
+		List<Student> list = mapper.scan(Student.class, expression);
+		return list;
 	}
 	
 	// Getting a student by StudentID
-	public Students getStudent(long StudentID) {
-		return studentsMap.get(StudentID);		
-	}
-	
-	// Get students in a given Program 
-	public List<Students> getStudentsByProgram(String programName){
-		
-		ArrayList<Students> studentList = new ArrayList<>();
-		for(Students student : studentsMap.values()) {
-			if(student.getProgramName() == programName) {
-				studentList.add(student);
-			}
-		}
-		return studentList;
-	}
-	
-	//Adding a student with input as a Students object
-	public Students addStudent(Students student) {	
-		long nextAvailableId = studentsMap.size() + 1;
-		student.setStudentID(nextAvailableId);
-		studentsMap.put(nextAvailableId, student);
-		return studentsMap.get(nextAvailableId);
-	}
-	
-	// Adding a student  with student details as input params
-	/*public void addStudent(String firstName, String programName, String[] coursesEnrolled, String image) {
-		long nextAvailableId = studentsMap.size()+1;
-		Students student = new Students(firstName, nextAvailableId, programName, coursesEnrolled, image);
-		studentsMap.put(nextAvailableId, student);
-	}*/
+	public List<Student> getStudent(String studId) {
+		HashMap<String, String> nameMap = new HashMap<String, String>();
+        nameMap.put("#key", "studentId");
 
-	// Deleting a Student
-	public Students deleteStudent(Long studentId) {		
-		Students studentToRemove = studentsMap.get(studentId);
-		studentsMap.remove(studentId);
-		return studentToRemove;		
+        Map<String, AttributeValue> valueMap = new HashMap<String, AttributeValue>();
+        valueMap.put(":value", new AttributeValue().withS(studId));
+        
+		DynamoDBQueryExpression<Student> expression = new DynamoDBQueryExpression<Student>()
+		.withIndexName("studentId-index")
+		.withConsistentRead(false)
+		.withKeyConditionExpression("#key = :value")
+		.withExpressionAttributeNames(nameMap)
+		.withExpressionAttributeValues(valueMap);
+		
+		List<Student> list = mapper.query(Student.class,expression);
+		return list;	
 	}
 	
 	// Updating Student Info
-	public Students updateStudentInfo(long studentId, Students student) {
-		student.setStudentID(studentId);
-		studentsMap.put(studentId, student);
-		return student;
+	public Student updateStudentInfo(String studId, Student newStudent) {
+		HashMap<String, String> nameMap = new HashMap<String, String>();
+        nameMap.put("#key", "studentId");
+
+        Map<String, AttributeValue> valueMap = new HashMap<String, AttributeValue>();
+        valueMap.put(":value", new AttributeValue().withS(studId));
+        
+		DynamoDBQueryExpression<Student> expression = new DynamoDBQueryExpression<Student>()
+		.withIndexName("studentId-index")
+		.withConsistentRead(false)
+		.withKeyConditionExpression("#key = :value")
+		.withExpressionAttributeNames(nameMap)
+		.withExpressionAttributeValues(valueMap);
+		
+		List<Student> list = mapper.query(Student.class,expression);
+		
+		Student studRetrieved = list.get(0);
+		
+		studRetrieved.setFirstName(newStudent.getFirstName());
+		studRetrieved.setLastName(newStudent.getLastName());
+		studRetrieved.setStudentId(newStudent.getStudentId());
+		studRetrieved.setJoiningDate(newStudent.getJoiningDate());
+		studRetrieved.setDepartment(newStudent.getDepartment());
+		studRetrieved.setRegisteredCourses(newStudent.getRegisteredCourses());
+		
+		mapper.save(studRetrieved);
+		return studRetrieved;
 	}
+	
+	// Deleting a Student
+	public Student deleteStudent(String studId) {		
+		HashMap<String, String> nameMap = new HashMap<String, String>();
+        nameMap.put("#key", "studentId");
+
+        Map<String, AttributeValue> valueMap = new HashMap<String, AttributeValue>();
+        valueMap.put(":value", new AttributeValue().withS(studId));
+        
+		DynamoDBQueryExpression<Student> expression = new DynamoDBQueryExpression<Student>()
+		.withIndexName("studentId-index")
+		.withConsistentRead(false)
+		.withKeyConditionExpression("#key = :value")
+		.withExpressionAttributeNames(nameMap)
+		.withExpressionAttributeValues(valueMap);
+		
+		List<Student> list = mapper.query(Student.class,expression);
+		Student studentToDelete = list.get(0);
+		
+		mapper.delete(studentToDelete);
+		return studentToDelete;		
+	}
+	
 	
 }

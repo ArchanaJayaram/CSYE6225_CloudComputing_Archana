@@ -13,13 +13,7 @@ import com.amazonaws.services.dynamodbv2.model.GetItemResult;
 public class DynamoDBTester {
 
 	static AmazonDynamoDB dynamoDB;
-	/*
-	 * *iNIT FUNCTION TO make client available
-	 * it sets up the resources - which include credentials
-	 * tell it where our table is in aws region
-	 * Then build the client
-	 */
-	
+
 	private static void init() throws Exception{
 	    ProfileCredentialsProvider credentialsProvider = new ProfileCredentialsProvider();
 	    credentialsProvider.getCredentials();

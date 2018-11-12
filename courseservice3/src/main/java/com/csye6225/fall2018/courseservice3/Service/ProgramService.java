@@ -6,9 +6,13 @@ import java.util.List;
 
 import com.csye6225.fall2018.courseservice3.Datamodel.InMemoryDatabase;
 import com.csye6225.fall2018.courseservice3.Datamodel.Program;
+import com.csye6225.fall2018.courseservice3.Datamodel.Courses;
+import com.csye6225.fall2018.courseservice3.Datamodel.Student;
 
 public class ProgramService {
-static HashMap<String, Program> programMap = InMemoryDatabase.getProgramDB();
+
+	static HashMap<String, Program> programMap = InMemoryDatabase.getProgramDB();
+	static CoursesService courseService = new CoursesService();
 	
 	//Adding a program with input as Program object
 			public Program addProgram(Program program) {

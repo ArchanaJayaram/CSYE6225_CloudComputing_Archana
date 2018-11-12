@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class InMemoryDatabase {
 	
 	private static HashMap<Long, Professor> professorDB = new HashMap<> ();
-	private static HashMap<Long, Students> studentsDB = new HashMap<> ();
+	private static HashMap<Long, Student> studentsDB = new HashMap<> ();
 	private static HashMap<String, Courses> coursesDB = new HashMap<> ();
 	private static HashMap<String, Lecture> lectureDB = new HashMap<> ();
 	private static HashMap<String, Program> programDB = new HashMap<> ();
@@ -14,7 +14,7 @@ public class InMemoryDatabase {
 		return professorDB;
 	}
 		
-	public static HashMap<Long, Students> getStudentsDB() {
+	public static HashMap<Long, Student> getStudentsDB() {
 		return studentsDB;
 	}
 	

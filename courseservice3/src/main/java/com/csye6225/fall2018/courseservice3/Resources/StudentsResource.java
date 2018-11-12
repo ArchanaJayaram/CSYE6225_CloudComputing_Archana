@@ -13,8 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import com.csye6225.fall2018.courseservice3.Datamodel.Professor;
-import com.csye6225.fall2018.courseservice3.Datamodel.Students;
+import com.csye6225.fall2018.courseservice3.Datamodel.Student;
 import com.csye6225.fall2018.courseservice3.Service.StudentsService;
 
 @Path("students")
@@ -22,41 +21,27 @@ public class StudentsResource {
 	
 	StudentsService studentService = new StudentsService();
 	
-	//Get all students by programName
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<Students> getStudentsByProgram(@QueryParam("programName") String programName) {
-		
-		if (programName == null) {
-			return studentService.getAllStudents();
-		}
-		return studentService.getStudentsByProgram(programName);
-		
-	}
-	
-	// ... webapi/Students/1 
-	//Get students by Student Id
-	@GET
-	@Path("/{studentId}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Students getStudent(@PathParam("studentId") long studentId) {
-		return studentService.getStudent(studentId);
-	}
-	
-	//Delete a student by student Id
-	@DELETE
-	@Path("/{studentId}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Students deleteStudent(@PathParam("studentId") long studentId) {
-		return studentService.deleteStudent(studentId);
-	}
-	
 	//Add a new student
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Students addStudent(Students student) {
+	public Student addStudent(Student student) {
 			return studentService.addStudent(student);
+	}
+	
+	//Get all students
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Student> getStudents() {
+		return studentService.getAllStudents();			
+	}
+	
+	//Get students by Student Id
+	@GET
+	@Path("/{studentId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Student> getStudent(@PathParam("studentId") String studentId) {
+		return studentService.getStudent(studentId);
 	}
 	
 	//Update information for an existing student
@@ -64,9 +49,16 @@ public class StudentsResource {
 	@Path("/{studentId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Students updateProfessor(@PathParam("studentId") long studentId,Students student) {
+	public Student updateProfessor(@PathParam("studentId") String studentId,Student student) {
 		return studentService.updateStudentInfo(studentId, student);
 	}
 	
-	
+	//Delete a student by student Id
+	@DELETE
+	@Path("/{studentId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Student deleteStudent(@PathParam("studentId") String studentId) {
+		return studentService.deleteStudent(studentId);
+	}
+		
 }

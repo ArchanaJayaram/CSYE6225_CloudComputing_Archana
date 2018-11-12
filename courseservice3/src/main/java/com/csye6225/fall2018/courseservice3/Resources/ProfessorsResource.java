@@ -22,16 +22,7 @@ import com.csye6225.fall2018.courseservice3.Service.ProfessorsService;
 public class ProfessorsResource {
 
 	ProfessorsService profService = new ProfessorsService();
-	
-	/*@GET
-	@Produces(MediaType.TEXT_PLAIN)
-	public String getProfessors() {
-		
-		//Professor prof1 = new Professor(1L,"Archana", "InformationSystems",new Date());
-		//Professor prof2 = new Professor(2L,"Alice", "ComputerScience",new Date());
-		return "I give back all professors ";
-	}*/
-	
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Professor> getProfessorsByDeparment(@QueryParam("department") String department) {
@@ -47,15 +38,15 @@ public class ProfessorsResource {
 	@GET
 	@Path("/{professorId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Professor getProfessor(@PathParam("professorId") long profId) {
-		return profService.getProfessor(profId);
+	public List<Professor> getProfessor(@PathParam("professorId") String professorId) {
+		return profService.getProfessor(professorId);
 	}
 	
 	@DELETE
 	@Path("/{professorId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Professor deleteProfessor(@PathParam("professorId") long profId) {
-		return profService.deleteProfessor(profId);
+	public Professor deleteProfessor(@PathParam("professorId") String professorId) {
+		return profService.deleteProfessor(professorId);
 	}
 	
 	@POST
@@ -69,12 +60,8 @@ public class ProfessorsResource {
 	@Path("/{professorId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Professor updateProfessor(@PathParam("professorId") long profId, Professor prof) {
-		return profService.updateProfessorInformation(profId, prof);
+	public Professor updateProfessor(@PathParam("professorId") String professorId, Professor prof) {
+		return profService.updateProfessorInformation(professorId, prof);
 	}
-	
-	public void addProfessor(String name, String department, Date joiningDate) {
-		profService.addProfessor(name, department, joiningDate);
-	}
-	
+
 }

@@ -12,9 +12,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.csye6225.fall2018.courseservice3.Datamodel.Courses;
+
 import com.csye6225.fall2018.courseservice3.Datamodel.Lecture;
-import com.csye6225.fall2018.courseservice3.Service.CoursesService;
 import com.csye6225.fall2018.courseservice3.Service.LectureService;
 
 @Path("lectures")
@@ -59,7 +58,7 @@ LectureService lectureService = new LectureService();
 		@Path("/{courseId}")
 		@Produces(MediaType.APPLICATION_JSON)
 		@Consumes(MediaType.APPLICATION_JSON)
-		public Lecture updateCourse(@PathParam("courseId") String courseId, List<String>updatedNotes) {
-			return lectureService.updateLectureInfo(courseId, updatedNotes);
+		public Lecture updateCourse(@PathParam("courseId") String courseId, Lecture lecture) {
+			return lectureService.updateLectureInfo(courseId, lecture);
 		}
 }
