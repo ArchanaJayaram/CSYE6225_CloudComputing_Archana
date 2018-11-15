@@ -125,13 +125,11 @@ Body:
 ANNOUNCEMENTS
 
 1) POST -  http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/announcements
-Body:
+Body: 
  {
         
-	  "announcementId": "A3",
-
-          "announcementText": "Course Material and Assignment have been uploaded",
-
+	  "announcementId": "A2",
+          "announcementText": "Course Material and Assignment have been uploaded along with final exam dates.",
           "boardId": "info6225"
 
   }
@@ -144,9 +142,9 @@ Body:
 Body:
  {
    
-          "announcementId": "A3",
+          "announcementId": "A2",
 
-          "announcementText": "Quiz key has been uploaded",
+          "announcementText": "Course Material and Assignment have been uploaded along with final exam dates.Quiz key has been also uploaded",
 
           "boardId": "info6225"
 
