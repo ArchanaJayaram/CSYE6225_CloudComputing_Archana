@@ -27,6 +27,7 @@ public class AnnouncementsService {
 	//Adding an announcement with input as announcement object
 		public Announcements addAnnouncement(Announcements announcement) {	
 			String text = announcement.getAnnouncementText();
+			
 			if (text.length() > 160) {
 				text = text.substring(0, 160);
 				announcement.setAnnouncementText(text);

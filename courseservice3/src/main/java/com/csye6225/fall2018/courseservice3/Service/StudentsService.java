@@ -4,18 +4,31 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.sns.AmazonSNS;
+import com.amazonaws.services.sns.AmazonSNSClient;
+import com.amazonaws.services.sns.AmazonSNSClientBuilder;
+import com.amazonaws.services.sns.model.SubscribeRequest;
+import com.csye6225.fall2018.courseservice3.Datamodel.CourseIds;
+import com.csye6225.fall2018.courseservice3.Datamodel.Courses;
 import com.csye6225.fall2018.courseservice3.Datamodel.DynamoDbConnector;
 import com.csye6225.fall2018.courseservice3.Datamodel.Student;
+import com.csye6225.fall2018.courseservice3.Service.CoursesService;
 
 public class StudentsService {
 	
 	static DynamoDbConnector dynamoDB;
 	DynamoDBMapper mapper;
 	Student studentObject = new Student();
+	CoursesService courseService = new CoursesService();
+	AmazonSNSClientBuilder snsClientBuilder = AmazonSNSClient.builder();
+	AmazonSNS sns = snsClientBuilder.standard().withCredentials(DefaultAWSCredentialsProviderChain.getInstance())
+			.withRegion("us-east-2")
+			.build();
 	
 	public StudentsService() {		
 		dynamoDB = new DynamoDbConnector();
@@ -27,6 +40,7 @@ public class StudentsService {
 	public Student addStudent(Student student) {	
 		mapper.save(student);
 		return student;
+		
 	}
 	
 	// Getting a list of all students
@@ -109,5 +123,30 @@ public class StudentsService {
 		return studentToDelete;		
 	}
 	
-	
+	//Registering a student for the specified courses
+	public Student registerStudentToCourse(String studentId, CourseIds coursesToRegister) {
+		
+		List<Student> studentList = getStudent(studentId);
+		Student student = studentList.get(0);
+		List<String> coursesRegistered = student.getRegisteredCourses();
+		List<String> courseIdsToRegister = coursesToRegister.getCourseIds();
+		
+		for(String courseId : courseIdsToRegister) {
+			if(coursesRegistered.size() < 3) {
+				coursesRegistered.add(courseId);
+				List<Courses> courses = courseService.getCourse(courseId);
+				Courses course = courses.get(0);
+				String topicArn = course.getNotificationTopic();
+				SubscribeRequest subRequest = new SubscribeRequest(topicArn, "email", student.getEmailId());
+				sns.subscribe(subRequest);
+			}
+			else {
+				break;
+			}
+		}
+		student.setRegisteredCourses(coursesRegistered);
+		mapper.save(student);	
+		return student;	
+		
+	}	
 }

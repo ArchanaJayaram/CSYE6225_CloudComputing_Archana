@@ -4,10 +4,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.sns.AmazonSNS;
+import com.amazonaws.services.sns.AmazonSNSClient;
+import com.amazonaws.services.sns.AmazonSNSClientBuilder;
+import com.amazonaws.services.sns.model.CreateTopicRequest;
+import com.amazonaws.services.sns.model.CreateTopicResult;
 import com.csye6225.fall2018.courseservice3.Datamodel.Courses;
 import com.csye6225.fall2018.courseservice3.Datamodel.DynamoDbConnector;
 
@@ -15,7 +21,13 @@ public class CoursesService {
 
 	static DynamoDbConnector dynamoDB;
 	DynamoDBMapper mapper;
+	String notificationTopic;
 	Courses courseObject = new Courses();
+	AmazonSNSClientBuilder snsClientBuilder = AmazonSNSClient.builder();
+	AmazonSNS sns = snsClientBuilder.standard().withCredentials(DefaultAWSCredentialsProviderChain.getInstance())
+			.withRegion("us-east-2")
+			.build();
+
 	
 	public CoursesService() {		
 		dynamoDB = new DynamoDbConnector();
@@ -24,9 +36,13 @@ public class CoursesService {
 	}
 	
 	//Adding a course with input as Course object
-		public Courses addCourse(Courses course) {	
+		public Courses addCourse(Courses course) {			
+			CreateTopicRequest createTopicRequest = new CreateTopicRequest("Topic_"+course.getCourseId());
+			CreateTopicResult createTopicResult = sns.createTopic(createTopicRequest);
+			notificationTopic = createTopicResult.getTopicArn();			
+			course.setNotificationTopic(notificationTopic);
 			mapper.save(course);
-			return course;
+			return course;			
 		}
 	
 	// Getting a list of all courses
