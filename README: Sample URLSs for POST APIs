@@ -1,3 +1,13 @@
+Register a student to course:
+
+-> POST: http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/students/archana.jayaram/register
+Body:
+    {
+   
+  	 "courseIds" : ["INFO5000"]
+ 
+   }
+
 PROFESSORS:
 
 1) POST - http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/professors
@@ -21,7 +31,7 @@ Body: (Changed the department)
         "firstName": "Andrie",
         "lastName":"Guschin",
         "department": "CSYE",
-        "joiningDate": "2016/01/01"
+        "joiningDate": "2016/01/01",
 }
 
 4) Delete: http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/professors/{professorId}
@@ -37,7 +47,8 @@ Body:
         "lastName": "Srinivas",
         "department": "InformationSystems",
         "registeredCourses": ["INFO6225","INFO1200","CSYE1250"],
-        "joiningDate": "09/05/2017"
+        "joiningDate": "09/05/2017",
+	"emailId": "jayaram.ar@husky.neu.edu
 }
 
 2) GET
@@ -63,12 +74,12 @@ COURSES:
 1) POST - http://cloudcomputing-env.i4uhkqy8qx.us-east-2.elasticbeanstalk.com/webapi/courses
 Body:
 {
-        "courseId": "INFO6225",
+        "courseId": "CSYE6225",
         "taId": "jing.fu",
         "professorId": "avinav.jami",
 	"department": "InformationSytems",
         "roster": ["archana.jayaram","aarabhi.puga","bharti.ladhani"],
-        "boardId": "info6225Board"
+        "boardId": "csye6225Board"
 
 }
 
@@ -80,12 +91,12 @@ Body:
 (Added more students to the roster)
 Body:
 {
-        "courseId": "INFO6225",
+        "courseId": "CSYE6225",
         "taId": "jing.fu",
         "professorId": "avinav.jami",
 	"department": "InformationSytems",
         "roster": ["archana.jayaram","aarabhi.puga","bharti.ladhani","diksha.narahari",""],
-        "boardId": "info6225Board"
+        "boardId": "csye6225Board"
 
 }
 
@@ -99,9 +110,9 @@ BOARD
 Body:
     {
         
-	     "boardId": "info6225Board",
+	     "boardId": "INFO6100Board",
 
-	     "courseId": "INFO6225"
+	     "courseId": "INFO6100"
    
     }
 
@@ -113,7 +124,7 @@ Body:
 Body:
     {
         
-	     "boardId": "info6100Board",
+	     "boardId": "INFO6100Board",
 
 	     "courseId": "INFO6100"
    
@@ -129,6 +140,7 @@ Body:
  {
         
 	  "announcementId": "A2",
+
           "announcementText": "Course Material and Assignment have been uploaded along with final exam dates.",
           "boardId": "info6225"
 
